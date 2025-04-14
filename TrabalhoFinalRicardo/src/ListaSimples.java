@@ -9,7 +9,7 @@
 
     @Override
     public void inserirElemento(Object elemento) {
-        if (estaCheia()) {
+        if (estaCheia()) { //passa por esse if para caso não tenha mais espaço na lista
             System.out.println("A lista está cheia! Operação cancelada. ");
         }
         listaSimples[tamanho] = elemento;
@@ -23,12 +23,12 @@
             System.out.println("A lista está cheia! Operação cancelada. ");
         }
 
-        if (indice < 0 || indice > tamanho) {
+        if (indice < 0 || indice > tamanho) { //serve para ver se o índice escolhido está de acordo com a lista
             System.out.println("Esse índice não está aplicável na lista");
         }
 
         for (int i = tamanho; i > indice; i++) {
-            listaSimples[indice + 1] = elemento;
+            listaSimples[indice + 1] = elemento; //encontra o indice para o elemento
         }
         listaSimples[indice] = elemento;
         tamanho++;
@@ -40,7 +40,7 @@
         if (estaCheia()) {
             System.out.println("A lista está cheia! Operação cancelada. ");
         }
-        for (int i = 0; i < listaSimples.length; i++) {
+        for (int i = 0; i < listaSimples.length; i++) { //.length serve para ""expandir"" a lista para que possa utilizar os espaços que vão ser inseridos
             inserirElemento(elementos[i]);
         }
 
@@ -48,13 +48,12 @@
 
     @Override
     public boolean removerElemento() {
-        if (estaVazia()) {
+        if (estaVazia()) {  //serve para fazer uma varredura e ver se a lista possui algum dado
             System.out.println("A lista não possui nenhum elemento! Operação cancelada. ");
             return false;
         }
         listaSimples[tamanho--] = null;
         return true;
-
 
     }
 
@@ -76,10 +75,17 @@
         if (estaVazia()) {
             System.out.println("A lista não possui nenhum elemento! Operação cancelada. ");
         }
-        for (int i = 0; i < listaSimples.length; i++) {
-            if (this.listaSimples[i] == listaSimples[i]) {
-
-            }
+        for (int i = 0; i < tamanho ; i++) {
+            for (int j = 0; j < listaSimples.length; j++) { // faz a varredura na lista para ver se o elemento está nela
+                if (this.listaSimples[i].equals(listaSimples[j])) { // if para remover o elemento da lista
+                    for (int k = 0; k < tamanho - 1; k++) {
+                        this.listaSimples[k] = listaSimples[k + 1];
+                    }
+                    tamanho--;
+                    i--;
+                    break;
+                }
+                }
         }
     }
 
@@ -108,7 +114,7 @@
     @Override
     public boolean buscarElemento(Object elemento) {
         for (int i = 0; i < tamanho; i++) {
-            if (listaSimples[i].equals(elemento)) {
+            if (listaSimples[i].equals(elemento)) { //.equals serve para ver se o elemento i é igual ao elemento inserido no construtor (i = elemento)
                 return true;
             }
         }
@@ -117,7 +123,7 @@
 
     @Override
     public Object buscarElementoIndice(int indice) {
-        if (indice < 0 || indice >= tamanho) {
+        if (indice < 0 || indice >= tamanho) { //serve para ver se o índice está dentro dos conformes da lista
             return null;
         }
         return listaSimples[indice];
@@ -131,18 +137,19 @@
                     if (listaSimples[i] instanceof String) { //instanceof String seria para determinar se a lista usaria um valor String
                         listaSimples[i] = Integer.parseInt((String) listaSimples[i]);
                     }
+
                 } catch (Exception e) {
                     System.out.println("Não foi possível a continuação.");
                       return;
                 }
             }
         }
-        for (int i = 0 ; i < tamanho - 1 ; i++) {
+        for (int i = 0 ; i < tamanho - 1 ; i++) { //vai do primeiro até o PENÚLTIMO
             for (int j = i + 1; j < tamanho; j++) {
                 Integer PrimeiroValor = (Integer) listaSimples[i];
                 Integer SegundoValor = (Integer) listaSimples[j];
 
-                if (PrimeiroValor > SegundoValor) {
+                if (PrimeiroValor > SegundoValor) { //se o primeiro valor > segundo valor, então ocore a troca entre o aux, primeiro valor e o segundo valor
                     Object aux = listaSimples[i];
                     listaSimples[i] = listaSimples[j];
                     listaSimples[j] = aux;
@@ -150,8 +157,8 @@
                 }
             }
         }
-        exibir();
         System.out.println("A fila está em ordem crescente agora.");
+        exibir();
 
     }
 
@@ -197,7 +204,7 @@
 
     @Override
     public void dobrarCapacidade() {
-        if (listaSimples.length == tamanho) {
+        if (listaSimples.length == tamanho) { //abre a lista para ver se a quantidade de tamanhos é igual
             Object[] NovoObjeto = new Object[tamanho * 2];
 
             for (int i = 0; i < tamanho; i++) {
@@ -209,7 +216,11 @@
 
     @Override
     public void editarElemento(Object elementoAntigo, Object elementoNovo) {
-
+        for (int i = 0; i < tamanho; i++) {
+            if (listaSimples[i].equals(elementoAntigo)) { // verifica se o elemento é igual antigo
+                listaSimples[i] = elementoNovo;
+            }
+        }
     }
 
     @Override
@@ -224,7 +235,7 @@
 
     @Override
     public void exibir() {
-        for (int i = 0; i < tamanho; i++) {
+        for (int i = 0; i < tamanho; i++) { //varredura entre os elementos da lista
             System.out.println(listaSimples[i]);
         }
     }
