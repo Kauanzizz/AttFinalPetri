@@ -2,7 +2,7 @@ public interface IEstruturaSimples {
 
     void inserirElemento(Object elemento);
     void inserirElementoIndice(Object elemento, int indice);
-    void inserirSequencia(Object elementos);
+    void inserirSequencia(Object[] elementos);
     boolean removerElemento();
     Object removerIndice(int indice);
     void removerSequencia(Object elementos);
