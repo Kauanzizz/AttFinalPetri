@@ -1,4 +1,4 @@
-public class ListaSimples implements IEstruturaSimples {
+    public class ListaSimples implements IEstruturaSimples {
     private Object[] listaSimples;
     private int tamanho;
 
@@ -36,12 +36,12 @@ public class ListaSimples implements IEstruturaSimples {
     }
 
     @Override
-    public void inserirSequencia(Object elementos) {
+    public void inserirSequencia(Object[] elementos) {
         if (estaCheia()) {
             System.out.println("A lista está cheia! Operação cancelada. ");
         }
         for (int i = 0; i < listaSimples.length; i++) {
-            inserirElemento(listaSimples[i]);
+            inserirElemento(elementos[i]);
         }
 
     }
@@ -85,8 +85,13 @@ public class ListaSimples implements IEstruturaSimples {
 
     @Override
     public void removerTodasOcorrencias(Object elemento) {
-        if (estaVazia()) {
-            System.out.println("A lista não possui nenhum elemento! Operação cancelada. ");
+        int i = 0;
+        while (i < tamanho) {
+            if (listaSimples[i].equals(elemento)) {
+                removerIndice(i);
+            } else {
+                i++;
+            }
         }
     }
 
@@ -103,7 +108,7 @@ public class ListaSimples implements IEstruturaSimples {
     @Override
     public boolean buscarElemento(Object elemento) {
         for (int i = 0; i < tamanho; i++) {
-            if (listaSimples.equals(elemento)) {
+            if (listaSimples[i].equals(elemento)) {
                 return true;
             }
         }
@@ -123,15 +128,16 @@ public class ListaSimples implements IEstruturaSimples {
         for (int i = 0; i < tamanho; i++) {
             if (listaSimples[i] != null) {
                 try {
-                    listaSimples[i] = Integer.parseInt((String) listaSimples[i]);
-
+                    if (listaSimples[i] instanceof String) { //instanceof String seria para determinar se a lista usaria um valor String
+                        listaSimples[i] = Integer.parseInt((String) listaSimples[i]);
+                    }
                 } catch (Exception e) {
                     System.out.println("Não foi possível a continuação.");
+                      return;
                 }
-                return;
             }
         }
-        for (int i = 0 ; i < tamanho ; i++) {
+        for (int i = 0 ; i < tamanho - 1 ; i++) {
             for (int j = i + 1; j < tamanho; j++) {
                 Integer PrimeiroValor = (Integer) listaSimples[i];
                 Integer SegundoValor = (Integer) listaSimples[j];
@@ -144,11 +150,43 @@ public class ListaSimples implements IEstruturaSimples {
                 }
             }
         }
+        exibir();
+        System.out.println("A fila está em ordem crescente agora.");
 
     }
 
     @Override
     public void ordenarDecrescente() {
+        for (int i = 0; i < tamanho; i++) {
+            if (listaSimples[i] != null) {
+                try {
+                    if (listaSimples[i] instanceof String) {
+                        listaSimples[i] = Integer.parseInt((String) listaSimples[i]);
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("Não foi possível a continuação.");
+                    return;
+                }
+            }
+        }
+
+        for (int i = 0 ; i < tamanho - 1; i++) {
+            for (int j = i + 1; j < tamanho; j++) {
+                Integer PrimeiroValor = (Integer) listaSimples[i];
+                Integer SegundoValor = (Integer) listaSimples[j];
+
+                if (PrimeiroValor < SegundoValor) {
+                    Object aux = listaSimples[i];
+                    listaSimples[i] = listaSimples[j];
+                    listaSimples[j] = aux;
+
+                }
+            }
+        }
+        exibir();
+        System.out.println("A fila está em ordem decrescente agora.");
+
 
     }
 
