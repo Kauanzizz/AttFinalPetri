@@ -21,6 +21,7 @@ public class    MenuSimples {
             System.out.println("6 - Obter Primeiro Elemento");
             System.out.println("7 - Obter Último Elemento");
             System.out.println("8 - Limpar Lista");
+            System.out.println("9 - Exibir Lista");
             System.out.println("0 - Cancelar");
             escolha = scanner.nextInt();
 
@@ -42,6 +43,7 @@ public class    MenuSimples {
                                 System.out.println("Insira o elemento que você quer implementar: ");
                                 Object elemento = scanner.next();
                                 listaSimples.inserirElemento(elemento);
+                                break;
 
                             case 2:
                                 System.out.println("Insira o elemento que você quer implementar: ");
@@ -49,6 +51,7 @@ public class    MenuSimples {
                                 System.out.println("Agora, insira em qual índice você gostaria de inserir o elemento: ");
                                 int indice = scanner.nextInt();
                                 listaSimples.inserirElementoIndice(elementoIndice, indice);
+                                break;
 
                             case 3:
                                 System.out.println("Quantos elementos você gostaria de inserir? ");
@@ -59,6 +62,10 @@ public class    MenuSimples {
                                     ElementosNovos[i] = scanner.next();
                                 }
                                 listaSimples.inserirSequencia(ElementosNovos);
+                                break;
+
+                            case 0:
+                                break;
                         }
                     } while (InserirMetodo != 0);
 
@@ -79,11 +86,13 @@ public class    MenuSimples {
                             case 1:
                                 listaSimples.removerElemento();
                                 System.out.println("O "+ (tamanhoLista - 1) + "o elemento foi removido com sucesso");
+                                break;
 
                             case 2:
                                 System.out.println("Qual elemento você gostaria de remover: ");
                                 int ElementoIndice = scanner.nextInt();
                                 Object ElementoRemovido = listaSimples.removerIndice(ElementoIndice);
+
 
                                 if (ElementoRemovido != null && ElementoRemovido.equals(0)) {
                                     System.out.println("O elemento " + ElementoIndice + " foi removido");
@@ -91,14 +100,28 @@ public class    MenuSimples {
                                 else {
                                     System.out.println("Esse elemento nao está na lista ou ela está vazia");
                                 }
+                                break;
 
                             case 3:
                                 System.out.println("Quantos elementos você gostaria de remover: ");
                                 int QtdElementos = scanner.nextInt();
-                                listaSimples.removerSequencia();
+                                Object[] sequenciaRemover = new Object[QtdElementos];
+                                for (int i = 0; i < QtdElementos ; i++) {
+                                    System.out.println("Elemento " + i + 1);
+                                    sequenciaRemover[i] = listaSimples.removerIndice(i);
+                                }
+                                listaSimples.removerSequencia(sequenciaRemover);
+                                break;
 
                             case 4:
-                                listaSimples.removerTodasOcorrencias();
+                                System.out.println("Qual elemento de todas as ocorrências você gostaria de remover da lista: ");
+                                Object RemoverOcorrencia = scanner.next();
+                                listaSimples.removerTodasOcorrencias(RemoverOcorrencia);
+                                break;
+
+                            case 0:
+                                break;
+
                         }
                     } while (RemoverMetodo != 0);
 
@@ -108,17 +131,40 @@ public class    MenuSimples {
 
                         System.out.println("Qual forma de busca você deseja utilizar: ");
                         System.out.println("1 - Buscar Elemento");
-                        System.out.println("2 - Buscar Elemento específco");
+                        System.out.println("2 - Buscar Elemento pelo índice");
                         System.out.println("0 - Voltar para os métodos");
                         BuscarMetodo = scanner.nextInt();
 
                         switch (BuscarMetodo) {
 
                             case 1:
-                                listaSimples.buscarElemento();
+                                System.out.println("Qual elemento você gostaria de buscar: ");
+                                Object ElementoBusca = scanner.next();
+
+                                boolean encontrar = listaSimples.buscarElemento(ElementoBusca);
+
+                                if (encontrar) {
+                                    System.out.println("O elemento "+ ElementoBusca + " foi encontrado");
+                                } else {
+                                    System.out.println("Esse elemento não foi encontrado");
+                                }
+                                break;
 
                             case 2:
-                                listaSimples.buscarElementoIndice();
+                                System.out.println("Qual índice você irá inserir: ");
+                                int BuscaIndice = scanner.nextInt();
+
+                                Object EncontrarIndice = listaSimples.buscarElementoIndice(BuscaIndice);
+
+                                if (EncontrarIndice != null) {
+                                    System.out.println("O índice "+ BuscaIndice+" possui o elemento "+ EncontrarIndice);
+                                }  else {
+                                    System.out.println("Esse índice não consta na lista");
+                                }
+                                break;
+
+                            case 0:
+                                break;
 
 
                         }
@@ -139,9 +185,14 @@ public class    MenuSimples {
 
                             case 1:
                                 listaSimples.ordenarCrescente();
+                                break;
 
                             case 2:
                                 listaSimples.ordenarDecrescente();
+                                break;
+
+                            case 0:
+                                break;
                         }
 
                     } while (OrdenarMetodo != 0);
@@ -152,13 +203,11 @@ public class    MenuSimples {
                     break;
 
                 case 6:
-                    listaSimples.obterPrimeiroElemento();
-                    System.out.println("O primeiro elemento da lista é: ");
+                    System.out.println("O primeiro elemento da lista é o " + listaSimples.obterPrimeiroElemento());
                     break;
 
                 case 7:
-                    listaSimples.obterUltimoElemento();
-                    System.out.println("O último elemento da lista é: ");
+                    System.out.println("O último elemento da lista é o " + listaSimples.obterUltimoElemento());
                     break;
 
                 case 8:
@@ -166,6 +215,9 @@ public class    MenuSimples {
                     System.out.println("Lista foi limpa!");
                     break;
 
+                case 9:
+                    listaSimples.exibir();
+                    break;
             }
         } while (escolha != 0);
     }
