@@ -5,9 +5,5 @@ public class TesteMesa {
         Object elementos[] = {7, 3, 5, 2, 1};
         listaSimples.inserirSequencia(elementos);
         listaSimples.ordenarCrescente();
-        listaSimples.exibir();
-        listaSimples.ordenarCrescente();
-        listaSimples.exibir();
-        listaSimples.limpar();
     }
 }
